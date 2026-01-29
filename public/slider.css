@@ -1,0 +1,21 @@
+.cts-slider {
+    padding: 80px;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+
+.cts-logo {
+    max-width: 120px;
+    margin-bottom: 20px;
+}
+
+.cts-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #ff5a5f;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+}
