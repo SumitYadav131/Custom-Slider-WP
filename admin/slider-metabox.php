@@ -1,5 +1,4 @@
 <?php
-
 add_action('add_meta_boxes', 'add_slider_meta_box');
 
 // Add Meta Box
@@ -8,6 +7,7 @@ function add_slider_meta_box()
     add_meta_box('slider_settings', 'Sliders', 'meta_box_function', 'sliders');
 }
 
+// Add slider callback
 function meta_box_function($post)
 {
     $desc = get_post_meta($post->ID, 'slide_desc', true);
@@ -64,6 +64,26 @@ function meta_box_function($post)
 // Save meta fields
 add_action('save_post', 'save_slider_meta');
 
+
+// Save slider callback
+function save_slider_meta($post_id)
+{
+    $fields = [
+        'slide_template',
+        'slide_bg',
+        'slide_btn_url',
+        'slide_btn_text',
+        'slide_logo',
+        'slide_desc'
+    ];
+
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+
 // New metabox for shortcode and meplate choice options 
 add_action('add_meta_boxes', 'add_slider_setting_metabox');
 
@@ -93,23 +113,7 @@ function add_slider_shortcode($post)
 }
 
 
-function save_slider_meta($post_id)
-{
-    $fields = [
-        'slide_template',
-        'slide_bg',
-        'slide_btn_url',
-        'slide_btn_text',
-        'slide_logo',
-        'slide_desc'
-    ];
 
-    foreach ($fields as $field) {
-        if (isset($_POST[$field])) {
-            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
-        }
-    }
-}
 
 // Shortcode
 add_shortcode('custom_slider', 'slider_shortcode');
