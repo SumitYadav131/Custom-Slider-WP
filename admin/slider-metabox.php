@@ -64,7 +64,6 @@ function meta_box_function($post)
 // Save meta fields
 add_action('save_post', 'save_slider_meta');
 
-
 // Save slider callback
 function save_slider_meta($post_id)
 {
@@ -111,9 +110,6 @@ function add_slider_shortcode($post)
 
     <?php
 }
-
-
-
 
 // Shortcode
 add_shortcode('custom_slider', 'slider_shortcode');
