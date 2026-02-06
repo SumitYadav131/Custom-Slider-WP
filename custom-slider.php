@@ -21,6 +21,6 @@ add_action('init', function () {
 });
 
 
+
 require_once plugin_dir_path(__FILE__) . 'admin/slider-metabox.php';
 
-add_shortcode('custom', 'render_custom_slider');

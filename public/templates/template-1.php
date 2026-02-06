@@ -1,58 +1,44 @@
 <?php
-$title = get_the_title($post_id);
-$desc = get_post_meta($post_id, 'slide_desc', true);
-$logo = get_post_meta($post_id, 'slide_logo', true);
-$btn_text = get_post_meta($post_id, 'slide_btn_text', true);
-$btn_url = get_post_meta($post_id, 'slide_btn_url', true);
-$bg = get_post_meta($post_id, 'slide_bg', true);
-?>
+$slides = get_post_meta($post_id, 'slides', true);
+if (is_array($slides) && !empty($slides)):
+    $title = get_the_title($post_id);
+    $first = true;
+    ?>
 
-<section class="minimal-slide py-5 px-5" style="background: url('<?php echo esc_url($bg); ?>') center/cover no-repeat;">
-    <div class="container text-white">
-        <?php if ($logo): ?>
-            <img src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr($title); ?>" class="mb-3"
-                style="max-height:80px;">
-        <?php endif; ?>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <style>
+            img.d-block.w-100 {
+                height: 70vh;
+                object-fit: cover;
+            }
+        </style>
+        <div class="carousel-inner">
+            <?php foreach ($slides as $slide):
+                $desc = $slide['desc'] ?? '';
+                $bg = $slide['bg'] ?? '';
+                ?>
+                <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                    <img src="<?php echo esc_url($bg); ?>" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5><?php echo esc_html($title); ?></h5>
+                        <p><?php echo esc_html($desc); ?></p>
+                    </div>
+                </div>
 
-        <?php if ($title): ?>
-            <h1 class="fw-bold mb-3"><?php echo esc_html($title); ?></h1>
-        <?php endif; ?>
+                <?php
+                $first = false;
+            endforeach; ?>
+        </div>
 
-        <?php if ($desc): ?>
-            <p class="lead mb-4"><?php echo esc_html($desc); ?></p>
-        <?php endif; ?>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
 
-        <?php if ($btn_text && $btn_url): ?>
-            <a href="<?php echo esc_url($btn_url); ?>" class="btn btn-primary btn-lg"><?php echo esc_html($btn_text); ?></a>
-        <?php endif; ?>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </div>
-</section>
-
-<style>
-    .minimal-slide {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 400px;
-        color: #fff;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    }
-
-    .minimal-slide::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        /* dark overlay for readability */
-        z-index: 0;
-    }
-
-    .minimal-slide .container {
-        position: relative;
-        z-index: 1;
-    }
-</style>
+<?php endif; ?>
