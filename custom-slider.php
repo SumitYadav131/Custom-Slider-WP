@@ -1,7 +1,8 @@
 <?php
 /*
 Plugin Name: Custom Slider
-Author: Mydevit-solutions
+Description: Custom slider Allows multiple slides to in
+Author: Harsh Bhadauriya
 Version: 1.0
 */
 
