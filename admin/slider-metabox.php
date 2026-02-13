@@ -115,6 +115,16 @@ function save_slider_meta($post_id)
     if (isset($_POST['slide_template'])) {
         update_post_meta($post_id, 'slide_template', sanitize_text_field($_POST['slide_template']));
     }
+
+    if (isset($_POST['facebook-link'])) {
+        update_post_meta($post_id, 'facebook-link', esc_url_raw($_POST['facebook-link']));
+    }
+    if (isset($_POST['twitter-link'])) {
+        update_post_meta($post_id, 'twitter-link', esc_url_raw($_POST['twitter-link']));
+    }
+    if (isset($_POST['instagram-link'])) {
+        update_post_meta($post_id, 'instagram-link', esc_url_raw($_POST['instagram-link']));
+    }
 }
 
 
@@ -130,9 +140,12 @@ function add_slider_setting_metabox()
 function add_slider_shortcode($post)
 {
     $template = get_post_meta($post->ID, 'slide_template', true);
+    $facebook_link = get_post_meta($post->ID, 'facebook-link', true);
+    $twitter_link = get_post_meta($post->ID, 'twitter-link', true);
+    $instagram_link = get_post_meta($post->ID, 'instagram-link', true);
     ?>
     <p>
-        <label>Template</label><br>
+        <label><strong>Template</strong></label><br>
         <select name="slide_template">
             <option value="template-1" <?php selected($template, 'template-1'); ?>>Template 1</option>
             <option value="template-2" <?php selected($template, 'template-2'); ?>>Template 2</option>
@@ -142,6 +155,20 @@ function add_slider_shortcode($post)
         <strong>Shortcode:</strong><br>
         <code>[custom_slider id="<?php echo $post->ID; ?>"]</code>
     </p>
+    <div class="slider-social-links">
+        <p><strong>Social Links</strong></p>
+        <label for="facebook-link">Facebook</label><br>
+        <input type="text" name="facebook-link" value="<?php echo $facebook_link ?>" placeholder="facebook-url"
+            style="width:100%;">
+
+        <label for="twitter-link">Twitter</label><br>
+        <input type="text" name="twitter-link" value="<?php echo $twitter_link ?>" placeholder="twitter-url"
+            style="width:100%;">
+
+        <label for="instagram-link">Instagram</label><br>
+        <input type="text" name="instagram-link" value="<?php echo $instagram_link ?>" placeholder="instagram-url"
+            style="width:100%;">
+    </div>
     <?php
 }
 
